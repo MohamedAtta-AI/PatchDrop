@@ -98,15 +98,9 @@ We show some of the learned policies below.
 
 ![results](./figures/results_fmow.png)
 
-For questions or comments, please send an e-mail to **uzkent.burak@gmail.com** or use the issue tab in github.
+## My Results
+**HR Classifier Pretraining**
 
-You can cite our paper as:
-```
-@inproceedings{uzkent2020learning,
-  title={Learning when and where to zoom with deep reinforcement learning},
-  author={Uzkent, Burak and Ermon, Stefano},
-  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
-  pages={12345--12354},
-  year={2020}
-}
-```
+Training acc: 0.953, loss: 0.135
+
+Test acc: 0.91

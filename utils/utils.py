@@ -1,12 +1,14 @@
 import os
 import re
 import torch
+import torch.nn.functional as F
 import torchvision.transforms as transforms
 import torchvision.datasets as torchdata
 import torchvision.models as torchmodels
 import numpy as np
 import shutil
 from random import randint, sample
+from torch.distributions import Bernoulli
 
 from utils.fmow_dataloader import CustomDatasetFromImages
 
@@ -175,3 +177,36 @@ def get_model(model):
         agent = resnet_cifar.ResNet(resnet_cifar.BasicBlock, [2,2,2,2], 3, 16)  
 
     return rnet_hr, rnet_lr, agent
+
+
+def ppo_iter(minibatch_size, states, actions, log_probs, advantages):
+    batch_size = states.size(0)
+    for _ in range(batch_size // minibatch_size):
+        rand_ids = np.random.randint(0 , batch_size, minibatch_size)
+        yield states[rand_ids, :], actions[rand_ids, :], log_probs[rand_ids, :], advantages[rand_ids, :]
+
+
+def ppo_update(agent, args, optimizer, states, actions, log_probs, advantages):
+    
+    states = torch.cat(states).detach().cuda()
+    actions = torch.cat(actions).detach().cuda()
+    old_log_probs = torch.cat(log_probs).detach().cuda()
+    advantages = torch.cat(advantages).detach().cuda()
+
+    for _ in range(args.ppo_epochs):
+        # for state, action, old_log_probs, advantage in ppo_iter(args.batch_size, states, actions, log_probs, advantages):
+        probs = F.sigmoid(agent.forward(states, args.model.split('_')[1], 'lr'))
+        probs = probs*args.alpha + (1-args.alpha) * (1-probs)
+        distr = Bernoulli(probs)
+        new_log_probs = distr.log_prob(actions)
+
+        ratios = (new_log_probs - old_log_probs).exp()
+        print(ratios.shape)
+        surr1 = ratios * advantages
+        surr2 = torch.clamp(ratios, 1.0 - args.clip_eps, 1.0 + args.clip_eps) * advantages
+
+        loss = (-torch.min(surr1, surr2)).mean()
+
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()

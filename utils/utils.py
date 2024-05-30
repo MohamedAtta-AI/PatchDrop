@@ -10,6 +10,7 @@ from random import randint, sample
 
 from utils.fmow_dataloader import CustomDatasetFromImages
 
+
 def save_args(__file__, args):
     shutil.copy(os.path.basename(__file__), args.cv_dir)
     with open(args.cv_dir+'/args.txt','w') as f:
@@ -112,17 +113,10 @@ def agent_chosen_input(input_org, policy, mappings, patch_size):
 
     return input_org.cuda()
 
-def action_space_model(dset):
+def action_space_model():
     # Model the action space by dividing the image space into equal size patches
-    if dset == 'C10' or dset == 'C100':
-        img_size = 32
-        patch_size = 8
-    elif dset == 'fMoW':
-        img_size = 224
-        patch_size = 56
-    elif dset == 'ImgNet':
-        img_size = 224
-        patch_size = 56
+    img_size = 384
+    patch_size = 96
 
     mappings = []
     for cl in range(0, img_size, patch_size):
@@ -150,28 +144,8 @@ def get_dataset(model, root='data/'):
 
     return trainset, testset
 
-def get_model(model):
+def get_model():
 
     from models import resnet_cifar
-
-    if model=='R32_C10':
-        rnet_hr = resnet_cifar.ResNet(resnet_cifar.BasicBlock, [3,4,6,3], 3, 10)
-        rnet_lr = resnet_cifar.ResNet(resnet_cifar.BasicBlock, [3,4,6,3], 3, 10)
-        agent = resnet_cifar.ResNet(resnet_cifar.BasicBlock, [1,1,1,1], 3, 16)
-
-    elif model=='R32_C100':
-        rnet_hr = resnet_cifar.ResNet(resnet_cifar.BasicBlock, [3,4,6,3], 3, 100)
-        rnet_lr = resnet_cifar.ResNet(resnet_cifar.BasicBlock, [3,4,6,3], 3, 100)
-        agent = resnet_cifar.ResNet(resnet_cifar.BasicBlock, [1,1,1,1], 3, 16)
-
-    elif model=='R50_ImgNet':
-        rnet_hr = resnet_cifar.ResNet(resnet_cifar.BasicBlock, [3,4,6,3], 7, 1000)
-        rnet_lr = resnet_cifar.ResNet(resnet_cifar.BasicBlock, [3,4,6,3], 7, 1000)
-        agent = resnet_cifar.ResNet(resnet_cifar.BasicBlock, [2,2,2,2], 3, 16)
-
-    elif model=='R34_fMoW':
-        rnet_hr = resnet_cifar.ResNet(resnet_cifar.BasicBlock, [3,4,6,3], 7, 62)
-        rnet_lr = resnet_cifar.ResNet(resnet_cifar.BasicBlock, [3,4,6,3], 7, 62)
-        agent = resnet_cifar.ResNet(resnet_cifar.BasicBlock, [2,2,2,2], 3, 16)  
-
-    return rnet_hr, rnet_lr, agent
+    agent = resnet_cifar.ResNet(resnet_cifar.BasicBlock, [1,1,1,1], 3, 16)
+    return agent

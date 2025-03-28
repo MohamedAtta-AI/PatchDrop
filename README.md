@@ -1,9 +1,9 @@
 # Reimplementation of: PatchDrop - Learning When and Where to Zoom With Deep Reinforcement Learning
+**Original Paper's Authors**: Burak Uzkent, Stefano Ermon
+
 ![framework](./figures/framework.png)
 
-This repository contains implementation of a CVPR 2020 paper titled as __Learning When and Where to Zoom With Deep Reinforcement Learning__. PatchDrop proposes a reinforcement learning setup to perform conditional image sampling for the image recognition task. The goal is to use less number of image pixels when there is less ambiguity. We tried contributing to the research as a course project by changing the RL optimization algorithm used from REINFORCE to Proximal Policy Optimization, and fine-tuned a vision transformer model instead of the original CNN.
-
-**Original Paper's Authors**: Burak Uzkent, Stefano Ermon
+This repository contains re-implementation of a CVPR 2020 paper titled as __Learning When and Where to Zoom With Deep Reinforcement Learning__ by Burak Uzkent and Stefano Ermon. PatchDrop proposes a reinforcement learning setup to perform conditional image sampling for the image recognition task. The goal is to use less number of image pixels when there is less ambiguity. We tried contributing to the research as a course project by changing the RL optimization algorithm used from REINFORCE to Proximal Policy Optimization, and fine-tuned a vision transformer model instead of the original CNN.
 
 -------------------------------------------------------------------------------------
 ## Requirements

@@ -14,7 +14,7 @@ This repository contains implementation of a CVPR 2020 paper titled as __Learnin
   pip install -r requirements.txt
 ```
 
-## Visual example of learned policies from the paper
+## Visual example of learned policies from the paper (for understanding)
 
 **ImageNet**
 

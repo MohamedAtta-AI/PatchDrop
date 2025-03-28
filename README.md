@@ -1,15 +1,13 @@
-# PatchDrop - Learning When and Where to Zoom With Deep Reinforcement Learning
+# Reimplementation of: PatchDrop - Learning When and Where to Zoom With Deep Reinforcement Learning
 ![framework](./figures/framework.png)
 
-This repository contains implementation of our CVPR 2020 paper titled as __Learning When and Where to Zoom With Deep Reinforcement Learning__. PatchDrop proposes a reinforcement learning setup to perform conditional image sampling for the image recognition task. The goal is to use less number of image pixels when there is less ambiguity. Our experiments on the benchmarks, including CIFAR10, CIFAR100, ImageNet, and fMoW, we show that we can drop about 50% of the image patches with a minimal loss in classification accuracy. 
+This repository contains implementation of a CVPR 2020 paper titled as __Learning When and Where to Zoom With Deep Reinforcement Learning__. PatchDrop proposes a reinforcement learning setup to perform conditional image sampling for the image recognition task. The goal is to use less number of image pixels when there is less ambiguity. We tried contributing to the research as a course project by changing the RL optimization algorithm used from REINFORCE to Proximal Policy Optimization, and fine-tuned a vision transformer model instead of the original CNN.
 
-**PDF**: https://openaccess.thecvf.com/content_CVPR_2020/papers/Uzkent_Learning_When_and_Where_to_Zoom_With_Deep_Reinforcement_Learning_CVPR_2020_paper.pdf
-
-**Authors**: Burak Uzkent, Stefano Ermon
+**Original Paper's Authors**: Burak Uzkent, Stefano Ermon
 
 -------------------------------------------------------------------------------------
 ## Requirements
-**Frameworks**: Our implementation uses **Python3.5** and **PyTorch-v1.4.0** framework.
+**Frameworks**: **Python3.5** and **PyTorch-v1.4.0** framework.
 
 **Packages**: You should install prerequisites using:
 ```shell
@@ -98,9 +96,7 @@ We show some of the learned policies below.
 
 ![results](./figures/results_fmow.png)
 
-For questions or comments, please send an e-mail to **uzkent.burak@gmail.com** or use the issue tab in github.
-
-You can cite our paper as:
+The authors' paper:
 ```
 @inproceedings{uzkent2020learning,
   title={Learning when and where to zoom with deep reinforcement learning},
